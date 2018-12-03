@@ -3,27 +3,6 @@ const ObjectsToCsv = require('objects-to-csv');
 
 
 
-// Pick up the data
-//parser.parse;
-//const data[] = parser.parsedMail;
-
-// Data exemple
-const data = [
-    {
-        code: 'HK',
-        name: 'Hong Kong'
-    },
-    {
-        code: 'KLN',
-        name: 'Kowloon'
-    },
-    {
-        code: 'NT',
-        name: 'New Territories'
-    },
-];
-
-
 var csvEncoder = function () {
 
     // Pick up the data
@@ -45,10 +24,6 @@ var csvEncoder = function () {
             name: 'New Territories'
     },
 ];
-
-
-
-
 
 
     // If you use "await", code must be inside an asynchronous function:
