@@ -14,17 +14,27 @@ rCom is a multipurpose tool to interact with emails. It parses Mime files, creat
 
  - Install node js
  - Clone the repository :
- `git clone https://github.com/Lorenzomp/gl02.git rcom`
-- Change directory :
-`cd rcom`
+ 
+     `git clone https://github.com/Lorenzomp/gl02.git rcom`
+ 
+ - Change directory :
+ 
+     `cd rcom`
+ 
  - Install the required modules : 
- `npm install colors`
- `npm install caporal`
- `npm install objects-to-csv`
- `npm install papaparse`
- `npm install readline-synce`
+ 
+    `npm install colors`
+ 
+    `npm install caporal`
+ 
+    `npm install objects-to-csv`
+ 
+    `npm install papaparse`
+ 
+    `npm install readline-synce`
 
 ## Usage
--  `node rcom`
+
+`node rcom`
 
 The UI will then explain anything you need to know
