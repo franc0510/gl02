@@ -26,7 +26,7 @@ function nbMailsPeriode(jsonObj, day_min , day_max, mail) {
         cpt++;
       }
     }
-    console.log("Number of mails sended from ",day_min," recipient ",day_max);
+    console.log("Number of mails sent from ",day_min," recipient ",day_max);
     console.log("=================================");
     console.log(cpt);
     console.log("=================================");
@@ -43,7 +43,7 @@ function BuzzyDay(jsonObj){
         return false;
       }
     })
-    console.log("Mails sended during a Buzzy Day\n");
+    console.log("Mails sent during a Buzzy Day\n");
     console.log("=================================");
     for(let i=0; i<arr.length;i++){
         console.log(arr[i]);
