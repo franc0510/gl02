@@ -3,7 +3,8 @@ var colors = require('colors');
 
 var mimeParser = require('./mimeParser.js');
 var vcfEncoder = require('./vcfEncoder.js');
-var csvEncoder = require('./csvEncoder.js')
+var csvEncoder = require('./csvEncoder.js');
+var s = require('./stats.js');
 
 // Before starting : npm install objects-to-csv
 const ObjectsToCsv = require('objects-to-csv');
@@ -43,6 +44,27 @@ cli
             });
         })
     })
+
+    .command('stats', 'Get stats from mail box')
+  	.argument('[files...]', 'The [files...] to exploite, have to be .vcf format')
+  	.option('-n, --numberMails', 'show the number of mail exchanges for a specific mail adress', cli.BOOL, false)
+  	.option('-b, --buzzyDay', 'show the mails sended during Buzzy Day for a specific mail adress', cli.BOOL, false)
+  	.option('-t, --top10Users', 'show the top 10 of interlocutors for a specific mail adress', cli.BOOL, false)
+  	.option('-w --top10Words', 'show the top 10 of used words for a specific mail adress')
+  	.option('-g --generateChart', 'generate a chart with the mail exchanges for a specific mail adress', cli.BOOL, false)
+  	.action(function(args, options, logger){
+
+  		args.files.forEach(function(file){
+  			fs.readFile(file, 'utf8', function (err,data) {
+  				if (err) {
+  					return logger.warn(err);
+  				}
+  				else {
+  					s.main(args, options);
+  				}
+  			});
+  		});
+  	})
 
     // encode Mime to .vcf, creates an intermediary .json file doesn't make sense now
     .command('encode', 'Encode Mime [files...] to vcf format')
