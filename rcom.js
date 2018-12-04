@@ -119,7 +119,46 @@ cli
                         logger.info(file.green + " file is a valid Mime file".green);
                         datatable.push(analyzer.parsedMail[0]);
                         encoder.encode(datatable);
+
                         //Réalisation des graphes
+                        /*if (options.graphe1) {
+                            fs.writeFile(filePath + "/" + fileNameWithoutExtension + ".csv", CSV.stringify(analyzer.parsedMail[0]), function (err, data) {
+                                if (err) logger.info("Couldn't create : ".red + filePath + "/" + fileNameWithoutExtension + ".csv : " + err);
+                                else logger.info("File added : ".green + filePath + "/" + fileNameWithoutExtension + ".csv");
+                            });
+                        }
+                        var avgChart = {
+                            "width": 320,
+                            "height": 460,
+                            "data": {
+                                "url": "classeur.csv"
+                            },
+                            "mark": "point",
+                            "encoding": {
+                                "x": {
+                                    "field": "Horsepower",
+                                    "type": "quantitative"
+                                },
+                                "y": {
+                                    "field": "Miles_per_Gallon",
+                                    "type": "quantitative"
+                                }
+                            }
+
+
+                            const myChart = vegalite.compile(avgChart).spec;
+
+                            SVG version
+                            var runtime = vg.parse(myChart);
+                            var view = new vg.View(runtime).renderer('svg').run();
+                            var mySvg = view.toSVG();
+                            mySvg.then(function (res) {
+                                fs.writeFileSync("./result.svg", res)
+                                view.finalize();
+                                logger.info(myChart);
+                                logger.info("Chart output : ./result.svg");
+                            });
+                            */
 
                     }
                 } else {
@@ -128,8 +167,7 @@ cli
                 }
                 logger.debug(analyzer.parsedMail);
             });
-        })
-        var encoder = new csvEncoder();
+        }) var encoder = new csvEncoder();
         encoder.encode(datatable);
     })
 
