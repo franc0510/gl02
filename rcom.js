@@ -141,46 +141,7 @@ cli
                         logger.info(file.green + " file is a valid Mime file".green);
                         datatable.push(analyzer.parsedMail[0]);
                         encoder.encode(datatable);
-
                         //Réalisation des graphes
-                        /*if (options.graphe1) {
-                            fs.writeFile(filePath + "/" + fileNameWithoutExtension + ".csv", CSV.stringify(analyzer.parsedMail[0]), function (err, data) {
-                                if (err) logger.info("Couldn't create : ".red + filePath + "/" + fileNameWithoutExtension + ".csv : " + err);
-                                else logger.info("File added : ".green + filePath + "/" + fileNameWithoutExtension + ".csv");
-                            });
-                        }
-                        var avgChart = {
-                            "width": 320,
-                            "height": 460,
-                            "data": {
-                                "url": "classeur.csv"
-                            },
-                            "mark": "point",
-                            "encoding": {
-                                "x": {
-                                    "field": "Horsepower",
-                                    "type": "quantitative"
-                                },
-                                "y": {
-                                    "field": "Miles_per_Gallon",
-                                    "type": "quantitative"
-                                }
-                            }
-
-
-                            const myChart = vegalite.compile(avgChart).spec;
-
-                            SVG version
-                            var runtime = vg.parse(myChart);
-                            var view = new vg.View(runtime).renderer('svg').run();
-                            var mySvg = view.toSVG();
-                            mySvg.then(function (res) {
-                                fs.writeFileSync("./result.svg", res)
-                                view.finalize();
-                                logger.info(myChart);
-                                logger.info("Chart output : ./result.svg");
-                            });
-                            */
 
                     }
                 } else {
@@ -189,8 +150,52 @@ cli
                 }
                 logger.debug(analyzer.parsedMail);
             });
-        }) var encoder = new csvEncoder();
+        })
+        var encoder = new csvEncoder();
         encoder.encode(datatable);
-    })
+    }) 
+
+    //extract email with name, email, subject
+	.command('extract', 'Extract e_mail with shearch things')
+	.argument('[mail]', 'The [mail],[objetdumail],[prenom], [nom] to shearch')
+	.argument('[files...]', 'The [files...] to encode')
+	.option('-s, --showSymbols', 'log the analyzed symbol at each step', cli.BOOL, false)
+	.option('-t, --showTokenize', 'log the tokenization results', cli.BOOL, false)
+	.option('-e, --errors', 'log errors', cli.BOOL, false)
+	.option('-n, --nom', 'name')
+	.option('-p, --prenom', 'prenom')
+	.option('-d, --subjet', 'word in a subject')
+	.action(function(args, options, logger){
+		args.files.forEach(function(file){
+			fs.readFile(file, 'utf8', function (err,data) {
+				if (err) {
+					return logger.warn(err);
+				}
+				
+				var analyzer = new mimeParser(options.showTokenize, options.showSymbols, options.errors);
+				analyzer.parse(data);
+				for(var i = 0; i<analyzer.parsedMail[0].recipient.length;i++){
+				if(args.mail === analyzer.parsedMail[0].recipient[0]){
+					console.log(analyzer.parsedMail[0]);
+				}
+				}
+				nomprenom = analyzer.parsedMail[0].xTo.split(' ');
+				for(var i = 0; i<analyzer.parsedMail[0].xTo.length;i++){
+				if(nomprenom[i] === options.prenom || nomprenom[i] === options.nom){
+					console.log(analyzer.parsedMail[0]);
+				}
+				}
+				var test = false;
+				objet = analyzer.parsedMail[0].subject.split(' ');
+				if(options.subjet!=''){
+				for(var i = 0; i<objet.length;i++){
+					if(objet[i]===options.subjet){
+						test = true;
+				}}
+				if (test) console.log(analyzer.parsedMail[0]);
+				}
+			});
+	})
+	})
 
 cli.parse(process.argv);
