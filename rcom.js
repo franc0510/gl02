@@ -99,6 +99,7 @@ cli
 		
 	})
 
+    //stats
     .command('stats', 'Get stats from mail box')
   	.argument('[files...]', 'The [files...] to exploite, have to be .vcf format')
   	.option('-n, --numberMails', 'show the number of mail exchanges for a specific mail adress', cli.BOOL, false)
