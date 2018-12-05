@@ -191,21 +191,6 @@ function Graph(jsonObj, mail) {
 
 }
 
-/*function main(args, options) {
-
-    console.log(args, options);
-    var email = "john.arnold@enron.com";
-    var d1 = new Date("1999-01-01");
-    var d2 = new Date("2018-01-01");
-    nbMailsPeriode(jsonObj, d1, d2, email);
-    BuzzyDay(jsonObj);
-    Top10Interlocuteur(jsonObj, email);
-    MotsFreq(jsonObj, email);
-    Graph(jsonObj, email);
-
-    return 1;
-}*/
-
 module.exports = {
     main: function main(args, options) {
         var path = "./" + args.files;
