@@ -167,11 +167,10 @@ function Graph(jsonObj, mail) {
     try {
         fs.unlink('./data.html', err);
     } catch (err) {
-        console.log("");;
-    }
-  };
+        console.log("");
+    };
 
-  console.log(arr);
+  //console.log(arr);
   fs.unlinkSync('./data.html',(err) => {
     console.log('File deleted');
   });
@@ -192,7 +191,7 @@ function Graph(jsonObj, mail) {
 
 }
 
-function main(args, options) {
+/*function main(args, options) {
 
     console.log(args, options);
     var email = "john.arnold@enron.com";
@@ -205,7 +204,7 @@ function main(args, options) {
     Graph(jsonObj, email);
 
     return 1;
-}
+}*/
 
 module.exports = {
     main: function main(args, options) {
