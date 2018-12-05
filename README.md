@@ -4,11 +4,11 @@ rCom is a multipurpose tool to interact with emails. It parses Mime files, creat
 ## Files
 
  - [mail.js](mail.js) contains the structure of a mail object.
- - **csvEncoder.js** contains the code that creates .csv files from objects.
- - **mimeParser.js** contains the Mime parser.
- -  **rcom.js** contains the UI.
-- **stats.js** contains the code that generates the statistics.
-- **vcfEncoder.js** contains the code that creates .vcf files (vCards) from objects.
+ - [csvEncoder.js](csvEncoder.js) contains the code that creates .csv files from objects.
+ - [mimeParser.js](mimeParser.js) contains the Mime parser.
+ - [rcom.js](rcom.js) contains the UI.
+-  [stats.js](stats.js) contains the code that generates the statistics.
+-  [vcfEncoder.js](vcfEncoder.js) contains the code that creates .vcf files (vCards) from objects.
 
 ## Installation
 
