@@ -151,5 +151,90 @@ cli
         var encoder = new csvEncoder();
         encoder.encode(datatable);
     })
+ //read email with name subject or email
+        .command('read', 'Read e_mail with shearch things')
+        .argument('[mail]', 'The [mail],[objetdumail],[prenom], [nom] to shearch')
+        .argument('[files...]', 'The [files...] to encode')
+        .option('-s, --showSymbols', 'log the analyzed symbol at each step', cli.BOOL, false)
+        .option('-t, --showTokenize', 'log the tokenization results', cli.BOOL, false)
+        .option('-e, --errors', 'log errors', cli.BOOL, false)
+        .option('-n, --nom', 'nom')
+        .option('-p, --prenom', 'prenom')
+        .option('-d, --subjet', 'mot a recherché dans le sujet')
+        .action(function(args, options, logger){
+            args.files.forEach(function(file){
+                fs.readFile(file, 'utf8', function (err,data) {
+                    if (err) {
+                        return logger.warn(err);
+                    }
 
+                    var analyzer = new mimeParser(options.showTokenize, options.showSymbols, options.errors);
+                    analyzer.parse(data);
+                    for(var i = 0; i<analyzer.parsedMail[0].recipient.length;i++){
+                    if(args.mail === analyzer.parsedMail[0].recipient[0]){
+                        console.log(analyzer.parsedMail[0]);
+                    }
+                    }
+                    nomprenom = analyzer.parsedMail[0].xTo.split(' ');
+                    for(var i = 0; i<analyzer.parsedMail[0].xTo.length;i++){
+                    if(nomprenom[i] === options.prenom || nomprenom[i] === options.nom){
+                        console.log(analyzer.parsedMail[0]);
+                    }
+                    }
+                    var test = false;
+                    objet = analyzer.parsedMail[0].subject.split(' ');
+                    if(options.subjet!=''){
+                    for(var i = 0; i<objet.length;i++){
+                        if(objet[i]===options.subjet){
+                            test = true;
+                    }}
+                    if (test) console.log(analyzer.parsedMail[0]);
+                    }
+                });
+        })
+        })
+
+	//extract email into a directory
+	.command('extract', 'Extract e_mail with shearch things')
+	.argument('[mail]', 'The [mail],[objetdumail],[prenom], [nom] to shearch')
+	.argument('[files...]', 'The [files...] to encode')
+	.option('-s, --showSymbols', 'log the analyzed symbol at each step', cli.BOOL, false)
+	.option('-t, --showTokenize', 'log the tokenization results', cli.BOOL, false)
+	.option('-e, --errors', 'log errors', cli.BOOL, false)
+	.option('-n, --nom', 'nom')
+	.option('-p, --prenom', 'prenom')
+	.action(function(args, options, logger){
+						mkdirp('\emailextract', function (err) {
+				if (err) console.error(err)
+					else console.log('File with email created!')
+					});
+		args.files.forEach(function(file){
+			fs.readFile(file, 'utf8', function (err,data) {
+				if (err) {
+					return logger.warn(err);
+				}
+					var analyzer = new mimeParser(options.showTokenize, options.showSymbols, options.errors);
+				analyzer.parse(data);
+		
+				var analyzer = new mimeParser(options.showTokenize, options.showSymbols, options.errors);
+				analyzer.parse(data);
+				for(var i = 0; i<analyzer.parsedMail[0].recipient.length;i++){
+				if(args.mail === analyzer.parsedMail[0].recipient[0]){
+					copy(file, '\emailextract', function(err, file) {
+						if (err) throw err;
+					});		
+				}
+				}
+				nomprenom = analyzer.parsedMail[0].xTo.split(' ');
+				for(var i = 0; i<analyzer.parsedMail[0].xTo.length;i++){
+				if(nomprenom[i] === options.prenom || nomprenom[i] === options.nom){
+					copy(file, '\emailextract', function(err, file) {
+						if (err) throw err;
+					});	
+				}
+				}
+
+			});
+	})
+	})
 cli.parse(process.argv);
