@@ -3,7 +3,7 @@ rCom is a multipurpose tool to interact with emails. It parses Mime files, creat
 
 ## Files
 
- - **mail.js** contains the structure of a mail object.
+ - [mail.js](mail.js) contains the structure of a mail object.
  - **csvEncoder.js** contains the code that creates .csv files from objects.
  - **mimeParser.js** contains the Mime parser.
  -  **rcom.js** contains the UI.
@@ -38,3 +38,7 @@ rCom is a multipurpose tool to interact with emails. It parses Mime files, creat
 `node rcom`
 
 The UI will then explain anything you need to know
+
+## Sources
+
+See : [https://gitlab.com/Speedlulu/rcom](https://gitlab.com/Speedlulu/rcom)
