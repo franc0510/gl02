@@ -15,7 +15,6 @@ var readline = require('readline-sync');
 
 
 function nbMailsPeriode(jsonObj, day_min , day_max, mail) {
-  console.log(day_max,day_min);
     let cpt=0;
     for (var i = 0; i < jsonObj.data.length; i++){
       var obj = jsonObj.data[i];
@@ -26,7 +25,7 @@ function nbMailsPeriode(jsonObj, day_min , day_max, mail) {
         cpt++;
       }
     }
-    console.log("Number of mails sended from ",day_min," recipient ",day_max);
+    console.log("Number of mails sended from ",day_min," to ",day_max);
     console.log("=================================");
     console.log(cpt);
     console.log("=================================");
@@ -161,23 +160,21 @@ function Graph(jsonObj, mail){
   };
 
   console.log(arr);
-  try{
-    fs.unlink('./data.html', err);
-  }catch(err){
-    console.log("");;
-  }
+  fs.unlinkSync('./data.html',(err) => {
+    console.log('File deleted');
+  });
 
-  fs.open('./data.html', 'w', (err) => {
+  fs.openSync('./data.html', 'w', (err) => {
     console.log('File created');
   });
-  fs.writeFile('./data.html', str1, (err) => {
-    console.log('.');
+  fs.writeFileSync('./data.html', str1, (err) => {
+    console.log('1.', err);
   });
-  fs.appendFile('./data.html', JSON.stringify(arr), (err) => {
-    console.log(".");
+  fs.appendFileSync('./data.html', JSON.stringify(arr), (err) => {
+    console.log("2.", err);
   });
-  fs.appendFile('./data.html', str2, (err) => {
-    console.log(".");
+  fs.appendFileSync('./data.html', str2, (err) => {
+    console.log("3.", err);
   });
   console.log("You can open the file data.html to visualize the chart");
 
