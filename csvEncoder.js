@@ -12,7 +12,7 @@ csvEncoder.prototype.encode = function (datatable) {
         let csv = new ObjectsToCsv(datatable);
 
         // Save to file:
-        await csv.toDisk('./test.csv');
+        await csv.toDisk('./classeur.csv');
 
         // Return the CSV file as string:
         //console.log(await csv.toString());
