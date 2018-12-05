@@ -73,12 +73,14 @@ function TopInterlocuteur(jsonObj, mail) {
         if (email.recipient == mail) {
             topInterlocuteurTemp.push({
                 'mail': email.sender,
-                'nbmail': 1
+                'nbmail': 1,
+                date: email.date
             });
         } else if (email.sender == mail) {
             topInterlocuteurTemp.push({
                 'mail': email.recipient,
-                'nbmail': 1
+                'nbmail': 1,
+                date: email.date
             });
         }
     });
@@ -86,6 +88,7 @@ function TopInterlocuteur(jsonObj, mail) {
     topInterlocuteurTemp.forEach(elt => {
         let cpt = 0;
         let mail_temp;
+        let tmpDate = elt.date;
         for (let i = 0; i < topInterlocuteurTemp.length; i++) {
             mail_temp = elt.mail;
             if (topInterlocuteurTemp[i].mail == elt.mail && topInterlocuteurTemp[i].mail != "") {
@@ -96,7 +99,8 @@ function TopInterlocuteur(jsonObj, mail) {
         if (mail_temp != undefined) {
             topInterlocuteurArray.push({
                 'mail': mail_temp,
-                'nbmail': cpt
+                'nbmail': cpt,
+                date: tmpDate
             });
         }
     });
@@ -170,25 +174,82 @@ function Graph(jsonObj, mail) {
         console.log("");
     };
 
-  //console.log(arr);
-  fs.unlinkSync('./data.html',(err) => {
-    console.log('File deleted');
-  });
+    //console.log(arr);
+    fs.unlinkSync('./data.html', (err) => {
+        console.log('File deleted');
+    });
 
-  fs.openSync('./data.html', 'w', (err) => {
-    console.log('File created');
-  });
-  fs.writeFileSync('./data.html', str1, (err) => {
-    console.log('1.', err);
-  });
-  fs.appendFileSync('./data.html', JSON.stringify(arr), (err) => {
-    console.log("2.", err);
-  });
-  fs.appendFileSync('./data.html', str2, (err) => {
-    console.log("3.", err);
-  });
-  console.log("You can open the file data.html to visualize the chart");
+    fs.openSync('./data.html', 'w', (err) => {
+        console.log('File created');
+    });
+    fs.writeFileSync('./data.html', str1, (err) => {
+        console.log('1.', err);
+    });
+    fs.appendFileSync('./data.html', JSON.stringify(arr), (err) => {
+        console.log("2.", err);
+    });
+    fs.appendFileSync('./data.html', str2, (err) => {
+        console.log("3.", err);
+    });
+    console.log("You can open the file data.html to visualize the chart");
 
+}
+
+
+// option generateChart2
+function Graph2(jsonObj, mail) {
+
+    var str1 = '<!DOCTYPE html><html><head><title>Number of mails by date</title><script src="https://cdn.jsdelivr.net/npm/vega@4.3.0"></script><script src="https://cdn.jsdelivr.net/npm/vega-lite@3.0.0-rc8"></script><script src="https://cdn.jsdelivr.net/npm/vega-embed@3.20.0"></script></head><body><div id="vis"></div><script type="text/javascript">var yourVlSpec = {"$schema": "https://vega.github.io/schema/vega-lite/v2.6.5.json","data": {"values" :';
+    var str2 = '},"mark": "point","encoding": {"x": {"field": "date", "type": "temporal"},"size": {"field": "nbmail", "type": "quantitative"}}}\nvegaEmbed("#vis", yourVlSpec);</script></body></html>';
+    var arr = TopInterlocuteur(jsonObj, mail);
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === undefined) {
+            arr.splice(i, 1);
+        }
+    };
+
+    console.log(arr)
+
+
+    try {
+        fs.unlinkSync('./data2.html', err);
+    } catch (err) {
+        console.log("");;
+    }
+
+
+    fs.openSync('./data2.html', 'w', (err) => {
+        console.log('File created');
+    });
+    fs.writeFileSync('./data2.html', str1, (err) => {
+        console.log('.');
+    });
+    fs.appendFileSync('./data2.html', JSON.stringify(arr), (err) => {
+        console.log(".");
+    });
+    fs.appendFileSync('./data2.html', str2, (err) => {
+        console.log(".");
+    });
+    console.log("You can open the file data2.html to visualize the chart");
+
+}
+
+
+
+// for all options
+function main(args, options) {
+
+    console.log(args, options);
+    var email = "john.arnold@enron.com";
+    var d1 = new Date("1999-01-01");
+    var d2 = new Date("2018-01-01");
+    nbMailsPeriode(jsonObj, d1, d2, email);
+    BuzzyDay(jsonObj);
+    Top10Interlocuteur(jsonObj, email);
+    MotsFreq(jsonObj, email);
+    Graph(jsonObj, email);
+
+    return 1;
 }
 
 module.exports = {
@@ -219,6 +280,9 @@ module.exports = {
         } else if (options.generateChart) {
             var mail = readline.question("Enter the chosen mail adress\n");
             Graph(jsonObj, mail);
+        } else if (options.generateChart2) {
+            var mail = readline.question("Enter the chosen mail adress\n");
+            Graph2(jsonObj, mail);
         } else console.log("Command unknown");
     }
 }
