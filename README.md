@@ -31,7 +31,7 @@ rCom is a multipurpose tool to interact with emails. It parses Mime files, creat
  
     `npm install papaparse`
  
-    `npm install readline-synce`
+    `npm install readline-sync`
 
 ## Usage
 
