@@ -5,4 +5,4 @@ npm install colors
 
 - tweetCityVega : fonctionne avec les données test
 - tweetCity : //
-- 
+- tweetHour : completer les specifications (pas d'optionnel, "\ " pour le username)
