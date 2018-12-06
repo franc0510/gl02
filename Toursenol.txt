@@ -1,0 +1,3 @@
+npm nécessaires:
+npm install caporal
+npm install colors
