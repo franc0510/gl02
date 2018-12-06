@@ -1,3 +1,8 @@
-npm n�cessaires:
+npm nécessaires:
 npm install caporal
 npm install colors
+
+
+- tweetCityVega : fonctionne avec les données test
+- tweetCity : //
+- 
